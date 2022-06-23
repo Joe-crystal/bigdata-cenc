@@ -16,12 +16,12 @@ _header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.3"
 }
 
-M = []
-O_TIME = []
-EPI_LAT = []
-EPI_LON = []
-EPI_DEPTH = []
-LOCATION_C = []
+M = []              # 震级
+O_TIME = []         # 发震时刻(UTC+8)
+EPI_LAT = []        # 纬度(°)
+EPI_LON = []        # 经度(°)
+EPI_DEPTH = []      # 深度(千米)
+LOCATION_C = []     # 参考位置
 
 
 def retrive(url, params):

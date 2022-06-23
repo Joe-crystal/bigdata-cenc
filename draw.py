@@ -125,6 +125,6 @@ if __name__ == "__main__":      # 用已经爬的全部数据演示
     #draw_pot_1(lat, lon)
     #draw_pot_2(lat, lon)
     #draw_heat_map_1(m, lat, lon)
-    #draw_heat_map_2(m, date, lat, lon, t='y')
+    #draw_heat_map_2(m, date, lat, lon, t='m')
     #draw_bar_1(m)
 
