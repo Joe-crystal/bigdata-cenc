@@ -1,4 +1,6 @@
 import numpy as np
+import datetime
+
 import folium
 from folium import plugins
 from folium.plugins import HeatMap
@@ -10,8 +12,11 @@ def read_data():
     f = open("cenc.txt", "r", encoding='utf-8')
     m = []
     date = []
+    time = []
     lat = []
     lon = []
+    dep = []
+    loc = []
     while True:
         line = f.readline()
         if not line:
@@ -19,9 +24,37 @@ def read_data():
         line = line.split(' ')
         m.append(float(line[0]))
         date.append(line[1])
+        time.append(line[2])
         lat.append(float(line[3]))
         lon.append(float(line[4]))
-    return m, date, lat, lon
+        dep.append(float(line[5]))
+        loc.append(line[6])
+    f.close()
+    return m, date, time, lat, lon, dep, loc
+
+
+def query(date_1='2000-01-01', date_2='3000-01-01', lat_1=-90.0, lat_2=90.0, lon_1=-180.0, lon_2=180.0, dep_1=0, dep_2 = 10):
+    date_1 = datetime.datetime.strptime(date_1, '%Y-%m-%d')
+    date_2 = datetime.datetime.strptime(date_2, '%Y-%m-%d')
+    m, date, time, lat, lon, dep, loc = read_data()
+    m_q = []
+    date_q = []
+    time_q =[]
+    lat_q = []
+    lon_q = []
+    dep_q = []
+    loc_q = []
+    for i in range(len(m)):
+        date_now = datetime.datetime.strptime(date[i], '%Y-%m-%d')
+        if date_1 <= date_now <= date_2 and lat_1 <= lat[i] <= lat_2 and lon_1 <= lon[i] <= lon_2 and dep_1 <= dep[i] <= dep_2:
+            m_q.append(m[i])
+            date_q.append(date[i])
+            time_q.append(time[i])
+            lat_q.append(lat[i])
+            lon_q.append(lon[i])
+            dep_q.append(dep[i])
+            loc_q.append(loc[i])
+    return m_q, date_q, time_q, lat_q, lon_q, dep_q, loc_q
 
 
 '''
@@ -121,10 +154,11 @@ def draw_bar_1(m):
 
 
 if __name__ == "__main__":      # 用已经爬的全部数据演示
-    m, date, lat, lon = read_data()
+    #m, date, time, lat, lon, dep, loc = read_data()
     #draw_pot_1(lat, lon)
     #draw_pot_2(lat, lon)
     #draw_heat_map_1(m, lat, lon)
-    #draw_heat_map_2(m, date, lat, lon, t='m')
+    m, date, time, lat, lon, dep, loc = query(date_1='2020-01-01', date_2='2021-01-01')
+    draw_heat_map_2(m, date, lat, lon, t='m')
     #draw_bar_1(m)
 
