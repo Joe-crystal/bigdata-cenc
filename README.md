@@ -50,19 +50,19 @@ def draw_bar_1(m)								  # 柱状图 震级-次数
 
 还是画点，但一定区域的点会聚成一个，点上有数字表示这个点代表的区域有多少次地震
 
-![draw_pot_2_1](.\imgs\draw_pot_2_1.png)
+![draw_pot_2_1](https://raw.githubusercontent.com/xfhcxxy/bigdata-cenc/master/imgs/draw_pot_2_1.png)
 
 鼠标放到点上会显示这个点代表的区域
 
 放大地图点会变多
 
-<img src=".\imgs\draw_pot_2_2_.gif" alt="draw_pot_2_2_" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/xfhcxxy/bigdata-cenc/master/imgs/draw_pot_2_2_.gif" alt="draw_pot_2_2_" style="zoom:50%;" />
 
 #### draw_heat_map_1
 
 静态的热力图，也可以放大
 
-<img src=".\imgs\draw_heat_map_1_1.png" alt="draw_heat_map_1_1" style="zoom:75%;" />
+<img src="https://raw.githubusercontent.com/xfhcxxy/bigdata-cenc/master/imgs/draw_heat_map_1_1.png" alt="draw_heat_map_1_1" style="zoom:75%;" />
 
 #### draw_heat_map_2
 
@@ -72,7 +72,7 @@ def draw_bar_1(m)								  # 柱状图 震级-次数
 
 以下为默认的按月变化：
 
-![draw_heat_map_2_1_](.\imgs\draw_heat_map_2_1_.gif)
+![draw_heat_map_2_1_](https://raw.githubusercontent.com/xfhcxxy/bigdata-cenc/master/imgs/draw_heat_map_2_1_.gif)
 
 可自动变化、或手动下一个月的，自动的情况下可调节fps
 
@@ -82,4 +82,4 @@ def draw_bar_1(m)								  # 柱状图 震级-次数
 
 震级-次数的柱状图，展示不同震级地震出现次数的分布情况
 
-![draw_bar_1_1](.\imgs\draw_bar_1_1.png)
+![draw_bar_1_1](https://raw.githubusercontent.com/xfhcxxy/bigdata-cenc/master/imgs/draw_bar_1_1.png)
