@@ -22,10 +22,33 @@ EPI_LAT = []        # 纬度(°)
 EPI_LON = []        # 经度(°)
 EPI_DEPTH = []      # 深度(千米)
 LOCATION_C = []     # 参考位置
+M_OLD = []
+O_TIME_OLD = []
+EPI_LAT_OLD = []
+EPI_LON_OLD = []
+EPI_DEPTH_OLD = []
+LOCATION_C_OLD = []
+
+
+def read_data():
+    f = open("cenc.txt", "r", encoding='utf-8')
+    while True:
+        line = f.readline()
+        if not line:
+            break
+        line.rstrip()
+        line = line[:-1]
+        line = line.split(' ')
+        M_OLD.append(line[0])
+        O_TIME_OLD.append(line[1] + " " + line[2])
+        EPI_LAT_OLD.append(line[3])
+        EPI_LON_OLD.append(line[4])
+        EPI_DEPTH_OLD.append(line[5])
+        LOCATION_C_OLD.append(line[6])
+    f.close()
 
 
 def retrive(url, params):
-    time.sleep(1)
     response = requests.get(url, headers=_header, params=params)
     text = response.content.decode()
     x = text.find('[')
@@ -39,7 +62,7 @@ def retrive(url, params):
 
 
 def parse(texts):
-    f = open('cenc.txt', 'a', encoding='utf-8')
+    f = open('cenc.txt', 'w', encoding='utf-8')
     for text in texts:
         data_dict = ast.literal_eval(text)
         M.append(data_dict['M'])
@@ -49,14 +72,17 @@ def parse(texts):
         EPI_DEPTH.append(data_dict['EPI_DEPTH'])
         LOCATION_C.append(data_dict['LOCATION_C'])
         print((M[-1], O_TIME[-1], EPI_LAT[-1], EPI_LON[-1], EPI_DEPTH[-1], LOCATION_C[-1]))
+        msg = f"{M[-1]} {str(O_TIME[-1])} {EPI_LAT[-1]} {EPI_LON[-1]} {EPI_DEPTH[-1]} {LOCATION_C[-1]}"
+        if msg == f"{M_OLD[0]} {str(O_TIME_OLD[0])} {EPI_LAT_OLD[0]} {EPI_LON_OLD[0]} {EPI_DEPTH_OLD[0]} {LOCATION_C_OLD[0]}":
+            print("该信息已在库内，停止爬取！")
+            return True
         print(f"{M[-1]} {str(O_TIME[-1])} {EPI_LAT[-1]} {EPI_LON[-1]} {EPI_DEPTH[-1]} {LOCATION_C[-1]}", file=f)
     f.close()
+    return False
 
 
 def main():
-
-    f = open('cenc.txt', 'w', encoding='utf-8')
-    f.close()
+    read_data()
     for page in range(1, 515):
         print(f"第{page}页")
         params = {
@@ -78,7 +104,13 @@ def main():
         params["callback"] = f"jQuery180031232585725055584_1607253668377&_={time_stamp}"
         params["page"] = page
         content = retrive(url, params)
-        parse(content)
+        end = parse(content)
+        if end:
+            break
+    f = open('cenc.txt', 'a', encoding='utf-8')
+    for i in range(len(M_OLD)):
+        print(f"{M_OLD[i]} {str(O_TIME_OLD[i])} {EPI_LAT_OLD[i]} {EPI_LON_OLD[i]} {EPI_DEPTH_OLD[i]} {LOCATION_C_OLD[i]}", file=f)
+    f.close()
 
 
 if __name__ == '__main__':
