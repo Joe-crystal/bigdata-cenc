@@ -63,7 +63,7 @@ def query(date_1='2000-01-01', date_2='3000-01-01', lat_1=-90.0, lat_2=90.0, lon
 def draw_pot_1(lat, lon):     # 纬度和经度
     lat = np.array(lat)
     lon = np.array(lon)
-    world_map = folium.Map(zoom_start=10, control_scale=True,)
+    world_map = folium.Map(location=[35.3, 100.6], zoom_start=4, control_scale=True,)
     incidents = folium.map.FeatureGroup()
     for i in range(len(lat)):
         incidents.add_child(
@@ -86,7 +86,7 @@ def draw_pot_1(lat, lon):     # 纬度和经度
 def draw_pot_2(lat, lon):     # 纬度和经度
     lat = np.array(lat)
     lon = np.array(lon)
-    world_map = folium.Map(zoom_start=10, control_scale=True,)
+    world_map = folium.Map(location=[35.3, 100.6], zoom_start=4, control_scale=True,)
     marker_cluster = plugins.MarkerCluster().add_to(world_map)
     for i in range(len(lat)):
         folium.Marker(location=[lat[i], lon[i]]).add_to(marker_cluster)
@@ -100,7 +100,7 @@ def draw_heat_map_1(m, lat, lon):
     data = []
     for i in range(len(m)):
         data.append([lat[i], lon[i], m[i]])
-    world_map = folium.Map(zoom_start=10, control_scale=True,)
+    world_map = folium.Map(location=[35.3, 100.6], zoom_start=4, control_scale=True,)
     HeatMap(data).add_to(world_map)
     world_map.save("HeatMap1.html")
 
@@ -127,7 +127,7 @@ def draw_heat_map_2(m, date, lat, lon, t='m'):
             data_m = []
             date_m.append(date[i][:lim])
 
-    world_map = folium.Map(zoom_start=10, control_scale=True, )
+    world_map = folium.Map(location=[35.3, 100.6], zoom_start=4, control_scale=True, )
     plugins.HeatMapWithTime(data, index=date_m).add_to(world_map)
     world_map.save("HeatMap2.html")
 
@@ -154,11 +154,11 @@ def draw_bar_1(m):
 
 
 if __name__ == "__main__":      # 用已经爬的全部数据演示
-    #m, date, time, lat, lon, dep, loc = read_data()
-    #draw_pot_1(lat, lon)
-    #draw_pot_2(lat, lon)
-    #draw_heat_map_1(m, lat, lon)
-    m, date, time, lat, lon, dep, loc = query(date_1='2020-01-01', date_2='2021-01-01')
+    m, date, time, lat, lon, dep, loc = read_data()
+    draw_pot_1(lat, lon)
+    draw_pot_2(lat, lon)
+    draw_heat_map_1(m, lat, lon)
+    #m, date, time, lat, lon, dep, loc = query(date_1='2020-01-01', date_2='2021-01-01')
     draw_heat_map_2(m, date, lat, lon, t='m')
-    #draw_bar_1(m)
+    draw_bar_1(m)
 
